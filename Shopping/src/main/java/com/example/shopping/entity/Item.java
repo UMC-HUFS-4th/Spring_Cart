@@ -1,10 +1,8 @@
 package com.example.shopping.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
+@Entity
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +17,7 @@ public class Item {
     @Column(nullable = true)
     private String description;
 
-    @Column(nullable = false, columnDefinition = Long default 0)
-    private Long quntity;
+    @Column(nullable = false, columnDefinition = "BIGINT DEFAULT 0")
+    private Long quantity;
 
 }
