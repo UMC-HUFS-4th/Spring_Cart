@@ -1,25 +1,7 @@
-package com.example.item_project.entity;
+package com.example.shopping.entity;
 
-import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
+import jakarta.persistence.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-
-@Getter
-@Setter
-@Entity
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-@Data
-
-@Data
 @Entity
 public class Item {
     @Id

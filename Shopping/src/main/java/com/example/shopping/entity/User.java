@@ -2,7 +2,7 @@ package com.example.shopping.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
+
 
 import java.time.LocalDateTime;
 
@@ -33,4 +33,11 @@ public class User {
     @Column(nullable =false)
     private String status;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<WishList> wishLists;
+
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> a92db93a074c0bab465b6bb6541a9022c8b9f3c5
