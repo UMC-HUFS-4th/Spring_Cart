@@ -1,8 +1,13 @@
 package com.example.shopping.entity;
 
-import jakarta.persistence.*;
+
+
+import lombok.Data;
+
+import javax.persistence.*;
 
 @Entity
+@Data
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

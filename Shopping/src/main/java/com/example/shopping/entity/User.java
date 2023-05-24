@@ -1,10 +1,11 @@
 package com.example.shopping.entity;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.Data;
 
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Data
@@ -33,8 +34,8 @@ public class User {
     @Column(nullable =false)
     private String status;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<WishList> wishLists;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private WishList wishList;
 
 }
 
