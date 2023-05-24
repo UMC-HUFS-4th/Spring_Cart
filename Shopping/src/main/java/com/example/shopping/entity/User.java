@@ -38,4 +38,7 @@ public class User {
     private WishList wishList;
 
 }
+<<<<<<< HEAD
+=======
 
+>>>>>>> a92db93a074c0bab465b6bb6541a9022c8b9f3c5

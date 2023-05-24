@@ -11,18 +11,20 @@ import javax.persistence.*;
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long item_id;
+    private Long id;
 
     @Column(nullable = false)
-    private String item_name;
+    private String itemname;
 
     @Column(nullable = false)
     private Long price;
 
-    @Column(nullable = true)
+    @Column(length = 1000)
     private String description;
 
-    @Column(nullable = false, columnDefinition = "BIGINT DEFAULT 0")
-    private Long quantity;
+    @ManyToOne(mappedBy = "wishlist")
+    private List<Wishlist> wishlists;
 
+    @Column(nullable = false)
+    private Long quantity;
 }
