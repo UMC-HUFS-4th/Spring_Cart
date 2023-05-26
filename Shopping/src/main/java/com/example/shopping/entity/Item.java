@@ -14,7 +14,7 @@ public class Item {
     private Long id;
 
     @Column(nullable = false)
-    private String itemname;
+    private String item_name;
 
     @Column(nullable = false)
     private Long price;
@@ -22,8 +22,9 @@ public class Item {
     @Column(length = 1000)
     private String description;
 
-    @ManyToOne(mappedBy = "wishlist")
-    private List<Wishlist> wishlists;
+    @ManyToOne
+    @JoinColumn (name = "wishlist_id")
+    private WishList wishList;
 
     @Column(nullable = false)
     private Long quantity;

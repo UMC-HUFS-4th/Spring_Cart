@@ -1,6 +1,8 @@
 package com.example.shopping.entity;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 
@@ -34,6 +36,7 @@ public class User {
     @Column(nullable =false)
     private String status;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private WishList wishList;
 
