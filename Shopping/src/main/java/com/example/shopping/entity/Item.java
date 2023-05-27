@@ -1,13 +1,15 @@
 package com.example.shopping.entity;
 
-
-
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,8 +25,8 @@ public class Item {
     private String description;
 
     @ManyToOne
-    @JoinColumn (name = "wishlist_id")
-    private WishList wishList;
+    @JoinColumn(name = "wishlist_id", nullable = true)
+    private WishList wishlist_id;
 
     @Column(nullable = false)
     private Long quantity;
