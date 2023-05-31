@@ -16,20 +16,20 @@ public class ItemService {
 
     private final ItemRepository itemRepository;
 
-    public String create(String item_name, Long price, String description, Long quantity) {
+    public String createItem(String item_name, Long price, String description, Long quantity) {
 
         Item item = Item.builder().item_name(item_name).price(price).description(description).quantity(quantity).build();
         itemRepository.save(item);
         return item_name;
     }
 
-    public List<Item> get() {
+    public List<Item> getItems() {
 
         return itemRepository.findAll();
 
     }
 
-    public String update(Long item_id, String item_name, Long price, String description, Long quantity) {
+    public String updateItem(Long item_id, String item_name, Long price, String description, Long quantity) {
 
         Optional<Item> item = itemRepository.findById(item_id);
 

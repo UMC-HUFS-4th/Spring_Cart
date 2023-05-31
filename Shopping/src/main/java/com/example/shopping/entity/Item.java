@@ -25,8 +25,8 @@ public class Item {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "wishlist_id", nullable = true)
-    private WishList wishlist_id;
+    @JoinColumn(name = "wishlist_id", referencedColumnName = "wishlist_id", nullable = true)
+    private WishList wishList;
 
     @Column(nullable = false)
     private Long quantity;
