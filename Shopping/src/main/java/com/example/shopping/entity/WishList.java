@@ -1,12 +1,10 @@
 package com.example.shopping.entity;
 
-import lombok.Data;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Data
 public class WishList {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY )
@@ -21,4 +19,17 @@ public class WishList {
 
     @OneToMany(mappedBy = "wishList", cascade = CascadeType.ALL)
     private List<Item> items;
+
+    public Long get_wishlist_id() {
+        return wishlist_id;
+    }
+
+    public void setUser(User user){
+        this.user = user;
+        user.setWishList(this);
+    }
+
+    public List<Item> getItems() {
+        return this.items;
+    }
 }

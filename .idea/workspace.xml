@@ -5,12 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8ca34c75-edff-442e-8058-3823142a0f31" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Shopping/src/main/java/com/example/shopping/service/WishListService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Shopping/src/main/java/com/example/shopping/entity/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/Shopping/src/main/java/com/example/shopping/entity/Item.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Shopping/src/main/java/com/example/shopping/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/Shopping/src/main/java/com/example/shopping/entity/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Shopping/src/main/java/com/example/shopping/entity/WishList.java" beforeDir="false" afterPath="$PROJECT_DIR$/Shopping/src/main/java/com/example/shopping/entity/WishList.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Shopping/src/main/java/com/example/shopping/service/ItemService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Shopping/src/main/java/com/example/shopping/service/ItemService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Shopping/src/main/java/com/example/shopping/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Shopping/src/main/java/com/example/shopping/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Shopping/src/main/java/com/example/shopping/service/WishListService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Shopping/src/main/java/com/example/shopping/service/WishListService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,20 +29,24 @@
       <state>
         <projects_view>
           <tree_state>
-            <expand>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="Shopping" type="f1a62948:ProjectNode" />
-              </path>
-            </expand>
+            <expand />
             <select />
           </tree_state>
         </projects_view>
       </state>
     </system>
   </component>
+  <component name="FormatOnSaveOptions">
+    <option name="myRunOnSave" value="true" />
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="OptimizeOnSaveOptions">
+    <option name="myRunOnSave" value="true" />
   </component>
   <component name="ProjectId" id="2Q3FxkukzWGSqyNvAlDoMH5O65Z" />
   <component name="ProjectViewState">
@@ -52,6 +58,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;code.cleanup.on.save&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/kooju/OneDrive/바탕 화면/git/Spring_Cart&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -61,6 +68,9 @@
     &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;rearrange.code.on.save&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;actions.on.save&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;5b51fc723fc09d8186bcb78e290d18fa&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -179,10 +189,17 @@
       <workItem from="1685498620273" duration="203000" />
       <workItem from="1685512106112" duration="28000" />
       <workItem from="1685523460073" duration="170000" />
+      <workItem from="1685605034673" duration="1749000" />
+      <workItem from="1685680184252" duration="5089000" />
+      <workItem from="1685685351964" duration="85000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

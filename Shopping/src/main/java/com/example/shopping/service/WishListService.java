@@ -4,18 +4,26 @@ import com.example.shopping.entity.Item;
 import com.example.shopping.entity.User;
 import com.example.shopping.entity.WishList;
 import com.example.shopping.repository.ItemRepository;
+import com.example.shopping.repository.UserRepository;
 import com.example.shopping.repository.WishListRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class WishListService {
     private final WishListRepository wishListRepository;
     private final ItemRepository itemRepository;
+
+    @Autowired
+    public WishListService(WishListRepository wishListRepository, ItemRepository itemRepository){
+        this.wishListRepository = wishListRepository;
+        this.itemRepository = itemRepository;
+
+    }
 
     public String createWishList(User user) {
 
@@ -28,7 +36,7 @@ public class WishListService {
     public String addToWishList(Long wishlist_id, Item item){
         //wishlist_id로 wishlist가 존재하는지 조회
         Optional<WishList> wishListOptional = wishListRepository.findById(wishlist_id);
-        Optional<Item> itemOptional = itemRepository.findById(item.getId());
+        Optional<Item> itemOptional = itemRepository.findById(item.get_item_id());
 
         if(wishListOptional.isEmpty()) {
             throw new RuntimeException("존재하지 않는 위시리스트입니다.");
@@ -48,7 +56,7 @@ public class WishListService {
         return "상품을 위시리스트에 추가하였습니다.";
     }
 
-    public void getWishList(Long wishlist_id) {
+    public List<Item> getWishList(Long wishlist_id) {
         Optional<WishList> wishListOptional = wishListRepository.findById(wishlist_id);
 
         if (wishListOptional.isPresent()) {
@@ -58,11 +66,12 @@ public class WishListService {
 
             System.out.println("Item List:");
             for (Item item: itemList) {
-                System.out.println("- " + item.getItem_name());
-                total_price += item.getPrice();
+                System.out.println("- " + item.get_item_name());
+                total_price += item.get_price();
             }
 
             System.out.println("Total Price: " + total_price);
+            return itemList;
         } else {
             throw new RuntimeException("존재하지 않는 위시리스트입니다.");
         }
@@ -70,7 +79,7 @@ public class WishListService {
 
     public String deleteFromWishList(Long wishlist_id, Item items) {
         Optional<WishList> wishListOptional = wishListRepository.findById(wishlist_id);
-        Optional<Item> itemOptional = itemRepository.findById(items.getId());
+        Optional<Item> itemOptional = itemRepository.findById(items.get_item_id());
 
         if (wishListOptional.isEmpty()) {
             throw new RuntimeException("존재하지 않는 위시리스트입니다.");

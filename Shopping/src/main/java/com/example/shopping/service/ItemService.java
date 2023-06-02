@@ -10,44 +10,57 @@ import java.util.Optional;
 
 
 @Service
-@RequiredArgsConstructor
 
 public class ItemService {
 
     private final ItemRepository itemRepository;
 
-    public String createItem(String item_name, Long price, String description, Long quantity) {
+    public ItemService(ItemRepository itemRepository) {
+        this.itemRepository = itemRepository;
+    }
 
-        Item item = Item.builder().item_name(item_name).price(price).description(description).quantity(quantity).build();
+    public String createItem(Item item) {
         itemRepository.save(item);
-        return item_name;
+        return item.get_item_name();
     }
 
-    public List<Item> getItems() {
-
-        return itemRepository.findAll();
-
-    }
-
-    public String updateItem(Long item_id, String item_name, Long price, String description, Long quantity) {
-
+    public Item getItem(Long item_id) {
         Optional<Item> item = itemRepository.findById(item_id);
+        if(item.isPresent()) {
+            return item.get();
+        } else {throw new RuntimeException("존재하지 않는 상품입니다.");
+        }
+    }
 
-        if(item.isEmpty()) {
+    public List<Item> getAllItems() {
+        return itemRepository.findAll();
+    }
+
+    public String updateItem(Long item_id, Item itemDetails) {
+        Optional<Item> itemOptional = itemRepository.findById(item_id);
+
+        if (itemOptional.isEmpty()) {
             throw new RuntimeException(item_id + "에 해당하는 아이템이 존재하지 않습니다.");
         }
+        Item item = itemOptional.get();
 
-        Item foundItem = item.get();
-        foundItem.setItem_name(item_name);
-        foundItem.setPrice(price);
-        foundItem.setDescription(description);
-        foundItem.setQuantity(quantity);
-        itemRepository.save(foundItem);
-        return foundItem.getItem_name();
+        if (itemDetails.get_item_name() != null) {
+            item.set_item_name(itemDetails.get_item_name());
+        }
+        if (itemDetails.get_price() != null) {
+            item.set_price(itemDetails.get_price());
+        }
+        if (itemDetails.get_description() != null) {
+            item.set_description(itemDetails.get_description());
+        }
+        if (itemDetails.get_quantity() != null) {
+            item.set_quantity(itemDetails.get_quantity());
+        }
 
+        return item.get_item_name();
     }
 
-    public Item delete(Long item_id) {
+    public void delete(Long item_id) {
         Optional<Item> item = itemRepository.findById(item_id);
 
         if(!item.isPresent()) {
@@ -56,7 +69,5 @@ public class ItemService {
 
         Item founditem = item.get();
         itemRepository.delete(founditem);
-        return founditem;
     }
-
 }
