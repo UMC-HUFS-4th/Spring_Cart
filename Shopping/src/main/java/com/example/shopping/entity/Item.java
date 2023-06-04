@@ -1,56 +1,61 @@
 package com.example.shopping.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long item_id;
 
-    @Column(nullable = false)
+    @Column(name = "item_name")
     private String item_name;
 
-    @Column(nullable = false)
+    @Column(name = "price")
     private Long price;
 
-    @Column(length = 1000)
+    @Column(length = 1000, name = "description")
     private String description;
 
     @ManyToOne
     @JoinColumn(name = "wishlist_id", referencedColumnName = "wishlist_id", nullable = true)
     private WishList wishList;
 
-    @Column(nullable = false)
+    @Column(name = "quantity", columnDefinition = "bigint default 1")
     private Long quantity;
 
-    public Long get_item_id() {
-        return id;
+    public Long getItem_id() {
+        return item_id;
     }
 
-    public String get_item_name() {
+    public String getItem_name() {
         return item_name;
     }
 
-    public void set_item_name(String item_name) {
+    public void setItem_name(String item_name) {
         this.item_name = item_name;
     }
 
-    public Long get_price() {
+    public Long getPrice() {
         return price;
     }
 
-    public void set_price(Long price) {
+    public void setPrice(Long price) {
         this.price = price;
     }
 
-    public String get_description() {
+    public String getDescription() {
         return description;
     }
 
-    public void set_description(String description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
@@ -58,11 +63,11 @@ public class Item {
         this.wishList = wishList;
     }
 
-    public Long get_quantity() {
+    public Long getQuantity() {
         return quantity;
     }
 
-    public void set_quantity(Long quantity) {
+    public void setQuantity(Long quantity) {
         this.quantity = quantity;
     }
 }

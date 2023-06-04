@@ -1,20 +1,16 @@
 package com.example.shopping.entity;
 
-import javax.persistence.*;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Builder;
-import lombok.Data;
 
-
+import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 
-
+@Table(name = "`user`")
 public class User {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long user_id;
 
     @Column(nullable = false, unique = true)
@@ -35,7 +31,7 @@ public class User {
     @Column(nullable = false)
     private LocalDateTime modifiedDate;
 
-    @Column(nullable =false)
+    @Column(nullable = false)
     private String status;
 
     @JsonIgnore
@@ -48,11 +44,17 @@ public class User {
     public WishList getWishList() {
         return wishList;
     }
-    public Long get_user_id(){
+
+    public void setWishList(WishList wishList) {
+        this.wishList = wishList;
+        wishList.setUser(this);
+    }
+
+    public Long get_user_id() {
         return user_id;
     }
 
-    public void set_user_id(Long user_id){
+    public void set_user_id(Long user_id) {
         this.user_id = user_id;
     }
 
@@ -106,11 +108,6 @@ public class User {
 
     public String getStatus() {
         return status;
-    }
-
-    public void setWishList(WishList wishList) {
-        this.wishList = wishList;
-        wishList.setUser(this);
     }
 
     public void setStatus(String status) {

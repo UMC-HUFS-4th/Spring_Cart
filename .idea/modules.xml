@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Shopping.iml" filepath="$PROJECT_DIR$/.idea/modules/Shopping.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Shopping.main.iml" filepath="$PROJECT_DIR$/.idea/modules/Shopping.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Shopping.test.iml" filepath="$PROJECT_DIR$/.idea/modules/Shopping.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Spring_Cart.Shopping.main.iml" filepath="$PROJECT_DIR$/.idea/modules/Spring_Cart.Shopping.main.iml" />
     </modules>
   </component>
 </project>

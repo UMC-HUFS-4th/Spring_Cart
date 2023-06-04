@@ -2,15 +2,15 @@ package com.example.shopping.service;
 
 import com.example.shopping.entity.Item;
 import com.example.shopping.repository.ItemRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
 
 @Service
-
+@Transactional
 public class ItemService {
 
     private final ItemRepository itemRepository;
@@ -19,21 +19,28 @@ public class ItemService {
         this.itemRepository = itemRepository;
     }
 
-    public String createItem(Item item) {
-        itemRepository.save(item);
-        return item.get_item_name();
+    public Item createItem(Item item) {
+        Item newItem = Item.builder()
+                .item_name(item.getItem_name())
+                .price(item.getPrice())
+                .description(item.getDescription())
+                .quantity(item.getQuantity())
+                .build();
+        return itemRepository.save(newItem);
     }
 
     public Item getItem(Long item_id) {
         Optional<Item> item = itemRepository.findById(item_id);
-        if(item.isPresent()) {
+        if (item.isPresent()) {
             return item.get();
-        } else {throw new RuntimeException("존재하지 않는 상품입니다.");
+        } else {
+            throw new RuntimeException("존재하지 않는 상품입니다.");
         }
     }
 
     public List<Item> getAllItems() {
-        return itemRepository.findAll();
+        List<Item> items = itemRepository.findAll();
+        return items;
     }
 
     public String updateItem(Long item_id, Item itemDetails) {
@@ -44,30 +51,33 @@ public class ItemService {
         }
         Item item = itemOptional.get();
 
-        if (itemDetails.get_item_name() != null) {
-            item.set_item_name(itemDetails.get_item_name());
+        if (itemDetails.getItem_name() != null) {
+            item.setItem_name(itemDetails.getItem_name());
         }
-        if (itemDetails.get_price() != null) {
-            item.set_price(itemDetails.get_price());
+        if (itemDetails.getPrice() != null) {
+            item.setPrice(itemDetails.getPrice());
         }
-        if (itemDetails.get_description() != null) {
-            item.set_description(itemDetails.get_description());
+        if (itemDetails.getDescription() != null) {
+            item.setDescription(itemDetails.getDescription());
         }
-        if (itemDetails.get_quantity() != null) {
-            item.set_quantity(itemDetails.get_quantity());
+        if (itemDetails.getQuantity() != null) {
+            item.setQuantity(itemDetails.getQuantity());
         }
 
-        return item.get_item_name();
+        return item.getItem_name();
     }
 
-    public void delete(Long item_id) {
-        Optional<Item> item = itemRepository.findById(item_id);
+    public String deleteItem(Long item_id) {
+        Optional<Item> itemOptional = itemRepository.findById(item_id);
 
-        if(!item.isPresent()) {
+        if (!itemOptional.isPresent()) {
             throw new RuntimeException(item_id + "에 해당하는 상품이 존재하지 않습니다");
         }
 
-        Item founditem = item.get();
-        itemRepository.delete(founditem);
+        Item foundItem = itemOptional.get();
+        String itemName = foundItem.getItem_name();
+        itemRepository.delete(foundItem);
+
+        return itemName;
     }
 }
