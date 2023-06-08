@@ -1,20 +1,27 @@
 package com.example.shopping.entity;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class WishList {
     @Id
-    @GeneratedValue( strategy = GenerationType.IDENTITY )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long wishlist_id;
 
     @OneToOne
-    @JoinColumn ( name = "user_id" )
+    @JoinColumn(name = "user_id")
     private User user;
 
-    @Column (nullable = false)
+    @Column(nullable = true)
     private Long total_price;
 
     @OneToMany(mappedBy = "wishList", cascade = CascadeType.ALL)
@@ -24,12 +31,26 @@ public class WishList {
         return wishlist_id;
     }
 
-    public void setUser(User user){
+    public User getUser() {
+        return this.user;
+    }
+
+    public void setUser(User user) {
         this.user = user;
-        user.setWishList(this);
+        if (user.getWishList() != this) {
+            user.setWishList(this);
+        }
     }
 
     public List<Item> getItems() {
         return this.items;
+    }
+
+    public Long getTotal_price() {
+        return total_price;
+    }
+
+    public void setTotal_price(Long total_price) {
+        this.total_price = total_price;
     }
 }

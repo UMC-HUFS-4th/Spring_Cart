@@ -4,37 +4,41 @@ import com.example.shopping.entity.Item;
 import com.example.shopping.entity.User;
 import com.example.shopping.entity.WishList;
 import com.example.shopping.repository.ItemRepository;
+import com.example.shopping.repository.UserRepository;
 import com.example.shopping.repository.WishListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class WishListService {
     private final WishListRepository wishListRepository;
     private final ItemRepository itemRepository;
 
+    private final UserRepository userRepository;
+
     @Autowired
-    public WishListService(WishListRepository wishListRepository, ItemRepository itemRepository) {
+    public WishListService(UserRepository userRepository, WishListRepository wishListRepository, ItemRepository itemRepository) {
+        this.userRepository = userRepository;
         this.wishListRepository = wishListRepository;
         this.itemRepository = itemRepository;
 
     }
 
-    public String createWishList(User user) {
-
+    public WishList createWishList(User user) {
         WishList wishList = new WishList();
         wishList.setUser(user);
-        wishListRepository.save(wishList);
-        return "위시리스트가 생성되었습니다.";
+        return wishListRepository.save(wishList);
     }
 
-    public String addToWishList(Long wishlist_id, Item item) {
+    public Item addToWishList(Long wishlist_id, Long item_id) {
         //wishlist_id로 wishlist가 존재하는지 조회
         Optional<WishList> wishListOptional = wishListRepository.findById(wishlist_id);
-        Optional<Item> itemOptional = itemRepository.findById(item.getItem_id());
+        Optional<Item> itemOptional = itemRepository.findById(item_id);
 
         if (wishListOptional.isEmpty()) {
             throw new RuntimeException("존재하지 않는 위시리스트입니다.");
@@ -51,33 +55,70 @@ public class WishListService {
         itemList.add(newItem);
 
         newItem.setWishList(wishList);
-        return "상품을 위시리스트에 추가하였습니다.";
+
+        // 변경 사항을 저장
+        wishListRepository.save(wishList);
+        return itemRepository.save(newItem);
     }
 
-    public List<Item> getWishList(Long wishlist_id) {
+    public List<Item> getWishList(Long user_id) {
+        User user = userRepository.findById(user_id)
+                .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
+        WishList wishList = wishListRepository.findByUser(user);
+        if (wishList == null) {
+            throw new RuntimeException("위시리스트가 존재하지 않습니다.");
+        }
+        return wishList.getItems();
+    }
+
+    public void setItemQuantity(Long wishlist_id, Long item_id, Item itemDetails) {
+        Optional<WishList> wishListOptional = wishListRepository.findById(wishlist_id);
+
+        if (wishListOptional.isEmpty()) {
+            throw new RuntimeException("존재하지 않는 위시리스트입니다.");
+        }
+
+        WishList wishList = wishListOptional.get();
+        Optional<Item> itemOptional = wishList.getItems().stream()
+                .filter(item -> item.getItem_id().equals(item_id))
+                .findFirst();
+        if (itemOptional.isEmpty()) {
+            throw new RuntimeException("존재하지 않는 상품입니다.");
+        }
+
+        Item item = itemOptional.get();
+        if (itemDetails.getQuantity() != null) {
+            item.setQuantity(itemDetails.getQuantity());
+        }
+
+        wishListRepository.save(wishList);
+    }
+
+    public void updateTotalPrice(Long wishlist_id) {
         Optional<WishList> wishListOptional = wishListRepository.findById(wishlist_id);
 
         if (wishListOptional.isPresent()) {
             WishList wishList = wishListOptional.get();
             List<Item> itemList = wishList.getItems();
-            Long total_price = 0L;
 
-            System.out.println("Item List:");
+            // 총 가격 초기화
+            Long totalPrice = 0L;
+
+            // 각 아이템의 가격과 수량을 곱하여 총 가격 계산
             for (Item item : itemList) {
-                System.out.println("- " + item.getItem_name());
-                total_price += item.getPrice();
+                totalPrice += item.getPrice() * item.getQuantity();
             }
 
-            System.out.println("Total Price: " + total_price);
-            return itemList;
+            wishList.setTotal_price(totalPrice);
+            wishListRepository.save(wishList);
         } else {
             throw new RuntimeException("존재하지 않는 위시리스트입니다.");
         }
     }
 
-    public String deleteFromWishList(Long wishlist_id, Item items) {
+    public void deleteFromWishList(Long wishlist_id, Long item_id) {
         Optional<WishList> wishListOptional = wishListRepository.findById(wishlist_id);
-        Optional<Item> itemOptional = itemRepository.findById(items.getItem_id());
+        Optional<Item> itemOptional = itemRepository.findById(item_id);
 
         if (wishListOptional.isEmpty()) {
             throw new RuntimeException("존재하지 않는 위시리스트입니다.");
@@ -96,6 +137,11 @@ public class WishListService {
 
         List<Item> itemList = wishList.getItems();
         itemList.remove(item);
-        return "상품이 제거되었습니다.";
+
+        item.setWishList(null); // 상품의 위시리스트 참조를 제거
+
+        // 변경 사항을 저장
+        wishListRepository.save(wishList);
+        itemRepository.save(item);
     }
 }

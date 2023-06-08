@@ -22,7 +22,7 @@ public class ItemController {
     public ResponseEntity<String> createItem(
             @RequestBody Item item) {
         itemService.createItem(item);
-        return ResponseEntity.ok("상품이 등록되었습니다: ");
+        return ResponseEntity.ok("상품이 등록되었습니다: " + item.getItem_name());
     }
 
     @GetMapping("/get/{itemId}")

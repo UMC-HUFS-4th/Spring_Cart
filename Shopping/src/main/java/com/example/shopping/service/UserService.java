@@ -1,19 +1,20 @@
 package com.example.shopping.service;
 
-import com.example.shopping.entity.Item;
 import com.example.shopping.entity.User;
 import com.example.shopping.entity.WishList;
 import com.example.shopping.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class UserService {
+
     private final UserRepository userRepository;
     private final WishListService wishListService;
 
@@ -28,7 +29,9 @@ public class UserService {
         user.setCreatedDate(now);
         user.setModifiedDate(now);
         user.setStatus("Active");
-        wishListService.createWishList(user);
+        user = userRepository.save(user);
+        WishList wishList = wishListService.createWishList(user);
+        user.setWishList(wishList);
         return userRepository.save(user);
     }
 
@@ -71,23 +74,16 @@ public class UserService {
     }
 
     public void deleteUser(Long user_id) {
-        User user = getUser(user_id);
-        user.setModifiedDate(LocalDateTime.now());
-        user.setStatus("Deleted");
-        userRepository.save(user);
-        userRepository.delete(user);
-    }
-
-    public List<Item> getWishListItems(Long user_id) {
-        User user = userRepository.findById(user_id)
-                .orElseThrow(() -> new RuntimeException("User not found with id: " + user_id));
-
-        WishList wishList = user.getWishList();
-        if (wishList != null) {
-            return wishListService.getWishList(wishList.get_wishlist_id());
+        Optional<User> userOptional = userRepository.findById(user_id);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            user.setModifiedDate(LocalDateTime.now());
+            user.setStatus("Deleted");
+            userRepository.save(user);
+            userRepository.delete(user);
+        } else {
+            throw new RuntimeException("존재하지 않는 유저입니다.");
         }
-
-        return Collections.emptyList();
     }
 }
 

@@ -35,7 +35,7 @@ public class User {
     private String status;
 
     @JsonIgnore
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
     private WishList wishList;
 
     public User() {
@@ -47,7 +47,9 @@ public class User {
 
     public void setWishList(WishList wishList) {
         this.wishList = wishList;
-        wishList.setUser(this);
+        if (wishList.getUser() != this) {
+            wishList.setUser(this);
+        }
     }
 
     public Long get_user_id() {
